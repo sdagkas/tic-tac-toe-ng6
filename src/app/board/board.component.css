@@ -1,0 +1,29 @@
+#board {
+    width: 300px;
+    margin: 0 auto;
+    border: 1px solid #000;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    font-size: 50px;
+}
+
+#board .board-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #666;
+    cursor: pointer;
+}
+
+#board .board-item.checked {
+    cursor: default;
+}
+
+#board .board-item.winner {
+    background-color: rgb(255, 161, 161);
+}
+
+input[type=button] {
+    margin-top: 20px;
+}

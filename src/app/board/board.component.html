@@ -1,0 +1,11 @@
+<h3>{{ prompt }}</h3>
+
+<div id="board">
+  <div *ngFor="let square of board" class="board-item" 
+    [class.checked]="square.value != ''" [class.winner]="square.class == 'winner'"
+    (click)="square_click(this.square)">
+    {{ square.value }}
+  </div>
+</div>
+
+<input type="button" value="Play again" *ngIf="gameOver" (click)="newGame()" />
