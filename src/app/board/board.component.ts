@@ -29,17 +29,8 @@ export class BoardComponent implements OnInit {
 
   square_click(square) {
     if(square.value === '' && !this.gameOver) {
-      square.value = this.currentPlayer.symbol;
-
-      if(this.isWinner(this.PLAYER_HUMAN.symbol))
-        this.showGameOver(this.PLAYER_HUMAN);
-      else if(!this.availableSquaresExist())
-        this.showGameOver(this.DRAW);
-      else {
-        this.setCurrentPlayer();
-        this.showCurrentPlayerPrompt();
-        this.computerMove();
-      }
+      square.value = this.PLAYER_HUMAN.symbol;
+      this.completeMove(this.PLAYER_HUMAN);
     }
   }
 
@@ -47,16 +38,22 @@ export class BoardComponent implements OnInit {
     setTimeout(() => {
       let square = firstMove ? this.board[4] : this.getRandomAvailableSquare();
       square.value = this.PLAYER_COMPUTER.symbol;
-
-      if(this.isWinner(this.PLAYER_COMPUTER.symbol))
-        this.showGameOver(this.PLAYER_COMPUTER);
-      else if(!this.availableSquaresExist())
-        this.showGameOver(this.DRAW);
-      else {
-        this.setCurrentPlayer();
-        this.showCurrentPlayerPrompt();
-      }
+      this.completeMove(this.PLAYER_COMPUTER);
     }, 600);
+  }
+
+  completeMove(player) {
+    if(this.isWinner(player.symbol))
+      this.showGameOver(player);
+    else if(!this.availableSquaresExist())
+      this.showGameOver(this.DRAW);
+    else {
+      this.setCurrentPlayer();
+      this.showCurrentPlayerPrompt();
+
+      if(this.currentPlayer == this.PLAYER_COMPUTER)
+        this.computerMove();
+    }
   }
 
   setCurrentPlayer() {
