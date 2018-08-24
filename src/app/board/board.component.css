@@ -10,7 +10,12 @@
     grid-gap: 1px;
 }
 
-#board .board-item {
+#board.locked {
+    opacity: .7;
+    pointer-events: none;
+}
+
+#board .square {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,11 +23,11 @@
     cursor: pointer;
 }
 
-#board .board-item.checked {
+#board .square.checked {
     cursor: default;
 }
 
-#board .board-item.winner {
+#board .square.winner {
     background-color: rgb(255, 161, 161);
 }
 

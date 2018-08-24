@@ -15,6 +15,7 @@ export class BoardComponent implements OnInit {
   currentPlayer = this.PLAYER_HUMAN;
   prompt: string;
   gameOver: boolean;
+  boardLocked: boolean;
 
   constructor() { }
 
@@ -35,10 +36,12 @@ export class BoardComponent implements OnInit {
   }
 
   computerMove(firstMove: boolean = false) {
+    this.boardLocked = true;
     setTimeout(() => {
       let square = firstMove ? this.board[4] : this.getRandomAvailableSquare();
       square.value = this.PLAYER_COMPUTER.symbol;
       this.completeMove(this.PLAYER_COMPUTER);
+      this.boardLocked = false;
     }, 600);
   }
 
@@ -160,9 +163,12 @@ export class BoardComponent implements OnInit {
     ];
 
     this.gameOver = false;
+    this.boardLocked = false;
 
-    if(this.currentPlayer == this.PLAYER_COMPUTER)
+    if(this.currentPlayer == this.PLAYER_COMPUTER){
+      this.boardLocked = true;
       this.computerMove(true);
+    }
   }
 
   getRndInteger(min, max) {
