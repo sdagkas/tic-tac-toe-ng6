@@ -38,26 +38,25 @@ export class BoardComponent implements OnInit {
       else {
         this.setCurrentPlayer();
         this.showCurrentPlayerPrompt();
-
-        setTimeout(() => {
-          this.computerMove();
-        }, 600);
+        this.computerMove();
       }
     }
   }
 
   computerMove(firstMove: boolean = false) {
-    let square = firstMove ? this.board[4] : this.getRandomAvailableSquare();
-    square.value = this.PLAYER_COMPUTER.symbol;
+    setTimeout(() => {
+      let square = firstMove ? this.board[4] : this.getRandomAvailableSquare();
+      square.value = this.PLAYER_COMPUTER.symbol;
 
-    if(this.isWinner(this.PLAYER_COMPUTER.symbol))
-      this.showGameOver(this.PLAYER_COMPUTER);
-    else if(!this.availableSquaresExist())
-      this.showGameOver(this.DRAW);
-    else {
-      this.setCurrentPlayer();
-      this.showCurrentPlayerPrompt();
-    }
+      if(this.isWinner(this.PLAYER_COMPUTER.symbol))
+        this.showGameOver(this.PLAYER_COMPUTER);
+      else if(!this.availableSquaresExist())
+        this.showGameOver(this.DRAW);
+      else {
+        this.setCurrentPlayer();
+        this.showCurrentPlayerPrompt();
+      }
+    }, 600);
   }
 
   setCurrentPlayer() {

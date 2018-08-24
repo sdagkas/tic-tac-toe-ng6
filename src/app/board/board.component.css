@@ -1,18 +1,20 @@
 #board {
-    width: 300px;
+    width: 302px;
     margin: 0 auto;
     border: 1px solid #000;
     display: grid;
     grid-template-columns: 100px 100px 100px;
     grid-template-rows: 100px 100px 100px;
     font-size: 50px;
+    background-color: #666;
+    grid-gap: 1px;
 }
 
 #board .board-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #666;
+    background-color: #fff;
     cursor: pointer;
 }
 
