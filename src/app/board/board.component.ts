@@ -9,7 +9,7 @@ export class BoardComponent implements OnInit {
 
   PLAYER_COMPUTER = { name: 'Computer', symbol: 'o' };
   PLAYER_HUMAN = { name: 'You', symbol: 'x' };
-  DRAW = { name: 'Draw', symbol: '' };
+  DRAW = { name: 'Draw' };
 
   board: any[];
   currentPlayer = this.PLAYER_HUMAN;
@@ -38,7 +38,7 @@ export class BoardComponent implements OnInit {
       else {
         this.setCurrentPlayer();
         this.showCurrentPlayerPrompt();
-        
+
         setTimeout(() => {
           this.computerMove();
         }, 600);
@@ -83,18 +83,8 @@ export class BoardComponent implements OnInit {
     this.gameOver = true;
     this.prompt = 'Game over. Winner: ' + winner.name;
 
-    if(winner !== this.DRAW) {
-      this.currentPlayer = winner;
-    }    
-  }
-
-  getWinner(): string {
-    if(this.getWinnerPatterns(this.PLAYER_HUMAN.symbol).indexOf(this.board) > -1)
-      return 'You';
-    else if(this.getWinnerPatterns(this.PLAYER_COMPUTER.symbol).indexOf(this.board) > -1)
-      return 'Computer';
-    else
-      return 'Draw';
+    if(winner !== this.DRAW)
+      this.currentPlayer = winner;  
   }
 
   getWinnerPatterns(symbol: string): any[] {
