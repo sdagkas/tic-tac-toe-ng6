@@ -86,66 +86,28 @@ export class BoardComponent implements OnInit {
       this.currentPlayer = winner;  
   }
 
-  getWinnerPatterns(symbol: string): any[] {
+  get winningIndexes(): any[] {
     return [
-      [
-        { value: symbol }, { value: symbol }, { value: symbol },
-        { value: '' }, { value: '' }, { value: '' },
-        { value: '' }, { value: '' }, { value: '' }
-      ],
-      [
-        { value: '' }, { value: '' }, { value: '' },
-        { value: symbol }, { value: symbol }, { value: symbol },
-        { value: '' }, { value: '' }, { value: '' }
-      ],
-      [
-        { value: '' }, { value: '' }, { value: '' },
-        { value: '' }, { value: '' }, { value: '' },
-        { value: symbol }, { value: symbol }, { value: symbol }
-      ],
-      [
-        { value: symbol }, { value: '' }, { value: '' },
-        { value: symbol }, { value: '' }, { value: '' },
-        { value: symbol }, { value: '' }, { value: '' }
-      ],
-      [
-        { value: '' }, { value: symbol }, { value: '' },
-        { value: '' }, { value: symbol }, { value: '' },
-        { value: '' }, { value: symbol }, { value: '' }
-      ],
-      [
-        { value: '' }, { value: '' }, { value: symbol },
-        { value: '' }, { value: '' }, { value: symbol },
-        { value: '' }, { value: '' }, { value: symbol }
-      ],
-      [
-        { value: symbol }, { value: '' }, { value: '' },
-        { value: '' }, { value: symbol }, { value: '' },
-        { value: '' }, { value: '' }, { value: symbol }
-      ],
-      [
-        { value: '' }, { value: '' }, { value: symbol },
-        { value: '' }, { value: symbol }, { value: '' },
-        { value: symbol }, { value: '' }, { value: '' }
-      ],
+      [0, 1, 2],  //top row
+      [3, 4, 5],  //middle row
+      [6, 7, 8],  //bottom row
+      [0, 3, 6],  //first col
+      [1, 4, 7],  //second col
+      [2, 5, 8],  //third col
+      [0, 4, 8],  //first diagonal
+      [2, 4, 6]   //second diagonal
     ];
   }
 
   isWinner(symbol): boolean {
-    const patterns = this.getWinnerPatterns(symbol);
-
-    for(let pattern of patterns) {
-      let foundWinner = true;
-
-      for(let i = 0; i < 9; i++) {
-        if(pattern[i].value == symbol && pattern[i].value != this.board[i].value)
-          foundWinner = false;
-      }
+    for(let pattern of this.winningIndexes) {
+      const foundWinner = this.board[pattern[0]].value == symbol
+        && this.board[pattern[1]].value == symbol
+        && this.board[pattern[2]].value == symbol;
 
       if(foundWinner) {
-        for(let i = 0; i < 9; i++) {
-          if(pattern[i].value == symbol)
-            this.board[i].class = 'winner';
+        for(let index of pattern) {
+          this.board[index].class = 'winner';
         }
 
         return true;

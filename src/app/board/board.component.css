@@ -28,7 +28,7 @@
 }
 
 #board .square.winner {
-    background-color: rgb(255, 161, 161);
+    background-color: #ffa1a1;
 }
 
 input[type=button] {
