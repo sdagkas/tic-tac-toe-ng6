@@ -13,19 +13,14 @@ export class BoardComponent implements OnInit {
 
   board: any[];
   currentPlayer = this.PLAYER_HUMAN;
-  prompt: string;
+  lastWinner: any;
   gameOver: boolean;
   boardLocked: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    this.showCurrentPlayerPrompt();
     this.newGame();
-  }
-
-  showCurrentPlayerPrompt() {
-    this.prompt = 'Current player: ' + this.currentPlayer.name;
   }
 
   square_click(square) {
@@ -37,6 +32,7 @@ export class BoardComponent implements OnInit {
 
   computerMove(firstMove: boolean = false) {
     this.boardLocked = true;
+
     setTimeout(() => {
       let square = firstMove ? this.board[4] : this.getRandomAvailableSquare();
       square.value = this.PLAYER_COMPUTER.symbol;
@@ -51,24 +47,15 @@ export class BoardComponent implements OnInit {
     else if(!this.availableSquaresExist())
       this.showGameOver(this.DRAW);
     else {
-      this.setCurrentPlayer();
-      this.showCurrentPlayerPrompt();
+      this.currentPlayer = (this.currentPlayer == this.PLAYER_COMPUTER ? this.PLAYER_HUMAN : this.PLAYER_COMPUTER);
 
       if(this.currentPlayer == this.PLAYER_COMPUTER)
         this.computerMove();
     }
   }
 
-  setCurrentPlayer() {
-    this.currentPlayer = (this.currentPlayer == this.PLAYER_COMPUTER ? this.PLAYER_HUMAN : this.PLAYER_COMPUTER);
-  }
-
   availableSquaresExist(): boolean {
-    for(let square of this.board) {
-      if(square.value === '') return true;
-    }
-
-    return false;
+    return this.board.filter(s => s.value == '').length > 0;
   }
 
   getRandomAvailableSquare(): any {
@@ -80,7 +67,7 @@ export class BoardComponent implements OnInit {
 
   showGameOver(winner) {
     this.gameOver = true;
-    this.prompt = 'Game over. Winner: ' + winner.name;
+    this.lastWinner = winner;
 
     if(winner !== this.DRAW)
       this.currentPlayer = winner;  
@@ -107,7 +94,7 @@ export class BoardComponent implements OnInit {
 
       if(foundWinner) {
         for(let index of pattern) {
-          this.board[index].class = 'winner';
+          this.board[index].winner = true;
         }
 
         return true;

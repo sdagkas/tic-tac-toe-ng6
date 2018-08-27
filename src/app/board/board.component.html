@@ -1,8 +1,13 @@
-<h3>{{ prompt }}</h3>
+<h3 *ngIf="!gameOver">Current player: {{ currentPlayer.name }}</h3>
+<h3 *ngIf="gameOver && lastWinner == PLAYER_HUMAN">You win</h3>
+<h3 *ngIf="gameOver && lastWinner == PLAYER_COMPUTER">Computer wins</h3>
+<h3 *ngIf="gameOver && lastWinner == DRAW">It's a draw</h3>
 
-<div id="board" [class.locked]="boardLocked">
-  <div *ngFor="let square of board" class="square" 
-    [class.checked]="square.value != ''" [class.winner]="square.class == 'winner'"
+<div id="board" [class.locked]="boardLocked || gameOver">
+  <div *ngFor="let square of board" 
+    class="square" 
+    [class.checked]="square.value != ''" 
+    [class.winner]="square.winner"
     (click)="square_click(this.square)">
     {{ square.value }}
   </div>
